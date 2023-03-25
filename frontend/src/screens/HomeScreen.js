@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Products from '../components/Products'
 import { listProducts } from '../actions/productActions'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
 
 
 
@@ -21,16 +23,17 @@ const HomeScreen = () => {
     return (
         <>
             <h1>Latest Products</h1>
-            {loading ? (<h3>Loading...</h3>) : error ? (<h3>{error}</h3>) :
-                (<Row>
-                    {
-                        products.map(product => (
-                            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                                <Products product={product} />
-                            </Col>
-                        ))
-                    }
-                </Row>)}
+            {loading ? (<Loader />) :
+                error ? (<Message variant='danger'>{error}</Message>) :
+                    (<Row>
+                        {
+                            products.map(product => (
+                                <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                                    <Products product={product} />
+                                </Col>
+                            ))
+                        }
+                    </Row>)}
 
         </>
     )
