@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Button, Form, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { addToCart } from '../actions/cartActions'
+import { addToCart, removeItem } from '../actions/cartActions'
 import Message from '../components/Message'
 
 const CartScreen = ({ location }) => {
@@ -28,9 +28,12 @@ const CartScreen = ({ location }) => {
     }, [dispatch, productId, qty])
 
     const removeFromCartHandler = (id) => {
-        console.log('remove')
+        dispatch(removeItem(id))
     }
 
+    const checkoutHandler = () => {
+        navigate('/login?redirect=shipping')
+    }
     return (
         <Row>
             <Col md={8}>
@@ -75,8 +78,19 @@ const CartScreen = ({ location }) => {
                     </ListGroup>
                 )}
             </Col>
-            <Col md={2}></Col>
-            <Col md={2}></Col>
+            <Col md={4}>
+                <Card>
+                    <ListGroup variant='flush'>
+                        <ListGroup.Item>
+                            <h4>Subtotal {cartItems.reduce((acc, item) => acc + item.qty, 0)} Items</h4>
+                            ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            <Button type='button' className='w-100' disabled={cartItems.length === 0} onClick={checkoutHandler}>Proceed To Checkout</Button>
+                        </ListGroup.Item>
+                    </ListGroup>
+                </Card>
+            </Col>
 
         </Row>
     )
