@@ -1,15 +1,20 @@
-main{
+main {
     min-height: 80vh;
 }
 
-h4{
+h4 {
     padding: 1rem 0;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
-.rating span{
+.rating span {
     margin: 0.1 rem;
+}
+
+.form-control {
+    max-width: 150px;
+    min-width: 80px;
 }
