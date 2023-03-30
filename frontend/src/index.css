@@ -18,7 +18,7 @@ a {
     margin: 0.1 rem;
 }
 
-.form-control {
+.select-form-control {
     max-width: 150px;
     min-width: 120px;
 }
