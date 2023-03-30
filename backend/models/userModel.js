@@ -25,10 +25,12 @@ const userSchema = new Schema({
     timestamps: true
 })
 
+//@desc  method to compare entered password is match to the original password in db
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password)
 }
 
+//@desc  method to hash password of a newly created user before save
 userSchema.pre('save', async function (next) {
 
     if (!this.isModified('password')) {
