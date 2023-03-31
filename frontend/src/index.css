@@ -22,3 +22,25 @@ a {
     max-width: 150px;
     min-width: 120px;
 }
+
+/* checkout status bar */
+
+.checkout-steps {
+    display: flex;
+    justify-content: center;
+    width: 40rem;
+    margin: 1rem auto;
+}
+
+.checkout-status div {
+    border-bottom: 0.1rem #dbbcbc solid;
+    color: #dbbcbc;
+    flex: 1 1;
+    padding-top: 1rem;
+    max-width: 150px;
+}
+
+.checkout-status div.active {
+    border-bottom: 0.1rem #0f0e0e solid;
+    color: #0f0e0e;
+}

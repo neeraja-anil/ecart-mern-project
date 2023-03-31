@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Form, Button, FormGroup } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import FormContainer from '../components/FormContainer'
+import CheckoutStatus from '../components/CheckoutStatus'
 import { saveShippingAddress } from '../actions/cartActions'
 
 const ShippingScreen = () => {
@@ -26,43 +27,47 @@ const ShippingScreen = () => {
         navigate('/payment')
     }
     return (
-        <FormContainer>
-            <Form onSubmit={submitHandler}>
-                <FormGroup controlId='address' className='mb-3'>
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)} />
-                </FormGroup>
-                <FormGroup controlId='city' className='mb-3'>
-                    <Form.Label>City</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter city"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)} />
-                </FormGroup>
-                <FormGroup controlId='postalCode' className='mb-3'>
-                    <Form.Label>PostalCode</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter postalCode"
-                        value={postalCode}
-                        onChange={(e) => setPostalCode(e.target.value)} />
-                </FormGroup>
-                <FormGroup controlId='country' className='mb-3'>
-                    <Form.Label>Country</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter country"
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)} />
-                </FormGroup>
-                <Button type='submit' variant='success'>Continue</Button>
-            </Form>
-        </FormContainer>
+        <>
+            <CheckoutStatus step1 step2 />
+            <FormContainer>
+                <h2>Shipping</h2>
+                <Form onSubmit={submitHandler}>
+                    <FormGroup controlId='address' className='mb-3'>
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter Address"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)} />
+                    </FormGroup>
+                    <FormGroup controlId='city' className='mb-3'>
+                        <Form.Label>City</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter city"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)} />
+                    </FormGroup>
+                    <FormGroup controlId='postalCode' className='mb-3'>
+                        <Form.Label>PostalCode</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter postalCode"
+                            value={postalCode}
+                            onChange={(e) => setPostalCode(e.target.value)} />
+                    </FormGroup>
+                    <FormGroup controlId='country' className='mb-3'>
+                        <Form.Label>Country</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter country"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)} />
+                    </FormGroup>
+                    <Button type='submit' variant='success'>Continue</Button>
+                </Form>
+            </FormContainer>
+        </>
     )
 }
 
