@@ -50,16 +50,16 @@ const RegisterScreen = () => {
                 loading && <Loader />
             }
             <Form onSubmit={submitHandler}>
-                <Form.Label>Name</Form.Label>
                 <FormGroup controlId='name' className='mb-3'>
+                    <Form.Label>Name</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Enter your Full Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)} />
                 </FormGroup>
-                <Form.Label>Email address</Form.Label>
                 <FormGroup controlId='email' className='mb-3'>
+                    <Form.Label>Email address</Form.Label>
                     <Form.Control
                         type="email"
                         placeholder="Enter email"
