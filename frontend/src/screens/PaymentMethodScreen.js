@@ -17,7 +17,7 @@ const PaymentMethodScreen = () => {
 
     const navigate = useNavigate()
 
-    const [paymentMethod, setPaymentMethod] = useState('payPal')
+    const [paymentMethod, setPaymentMethod] = useState('PayPal')
 
     const dispatch = useDispatch()
 
