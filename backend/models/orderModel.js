@@ -23,7 +23,7 @@ const orderSchema = new Schema({
     shippingAddress: {
         address: { type: String, required: true },
         city: { type: String, required: true },
-        postelCode: { type: String, required: true },
+        postalCode: { type: String, required: true },
         country: { type: String, required: true }
     },
     paymentMethod: {
@@ -59,7 +59,6 @@ const orderSchema = new Schema({
     },
     paidAt: {
         type: Date,
-        required: true
     },
     isDelivered: {
         type: Boolean,
@@ -68,7 +67,6 @@ const orderSchema = new Schema({
     },
     deliveredAt: {
         type: Date,
-        required: true
     }
 }, {
     timestamps: true

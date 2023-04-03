@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', UserRoutes)
-app.use('./api/orders', OrderRoutes)
+app.use('/api/orders', OrderRoutes)
 
 app.use(notFound)
 
