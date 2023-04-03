@@ -8,6 +8,7 @@ import { savePaymentMethod } from '../actions/cartActions'
 
 const PaymentMethodScreen = () => {
 
+    const navigate = useNavigate()
     const cart = useSelector(state => state.cart)
     const { shippingAddress } = cart
 
@@ -15,7 +16,7 @@ const PaymentMethodScreen = () => {
         navigate('/shipping')
     }
 
-    const navigate = useNavigate()
+
 
     const [paymentMethod, setPaymentMethod] = useState('PayPal')
 
