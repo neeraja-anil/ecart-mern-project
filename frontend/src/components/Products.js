@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Button } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import Rating from './Rating'
@@ -19,7 +19,7 @@ const Products = ({ product }) => {
                 </Link>
 
                 <Card.Text as='div'>
-                    <Rating value={product.rating} text={`${product.numReviews} Reviews`}/>
+                    <Rating value={product.rating} text={`${product.numReviews} Reviews`} />
                 </Card.Text>
                 <Card.Text as='h4'>${product.price}</Card.Text>
                 {/* <Button variant="primary">Add To Cart</Button> */}
