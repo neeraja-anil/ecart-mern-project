@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { getOrderDetails, payOrder } from '../actions/orderActions'
-import { ORDER_PAY_RESET } from '../constants/orderConstants'
+import { ORDER_CREATE_RESET, ORDER_PAY_RESET } from '../constants/orderConstants'
 
 
 
@@ -69,6 +69,11 @@ const OrderScreen = () => {
     const successPaymentHandler = (paymentResult) => {
         console.log(paymentResult)
         dispatch(payOrder(orderId.id, paymentResult))
+    }
+
+    const successOrderHandler = () => {
+        dispatch({ type: ORDER_CREATE_RESET })
+        navigate('/')
     }
 
     return (
@@ -176,7 +181,7 @@ const OrderScreen = () => {
                                 ) : (
                                     <ListGroup.Item>
                                         <LinkContainer to={'/'}>
-                                            <Button className='w-100'>Go Back</Button>
+                                            <Button className='w-100' onClick={successOrderHandler}>Go Back</Button>
                                         </LinkContainer>
                                     </ListGroup.Item>
                                 )}
