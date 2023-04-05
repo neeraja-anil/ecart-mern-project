@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { useNavigate, Link, useParams } from 'react-router-dom'
-import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -165,12 +166,18 @@ const OrderScreen = () => {
                                         <Col>${order.totalPrice}</Col>
                                     </Row>
                                 </ListGroup.Item>
-                                {!order.isPaid && (
+                                {!order.isPaid ? (
                                     <ListGroup.Item>
                                         {loadingPay && <Loader />}
                                         {!sdkReady ? <Loader /> : (
                                             <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />
                                         )}
+                                    </ListGroup.Item>
+                                ) : (
+                                    <ListGroup.Item>
+                                        <LinkContainer to={'/'}>
+                                            <Button className='w-100'>Go Back</Button>
+                                        </LinkContainer>
                                     </ListGroup.Item>
                                 )}
 
