@@ -58,7 +58,7 @@ const ProductEditScreen = () => {
         <>
             <Link to='/admin/productlist' className='btn btn-light my-3'>Go Back</Link>
             <FormContainer>
-                <h1>Edit Product</h1>
+                <h1 className='mb-4'>Edit Product</h1>
 
                 {loading ? <Loader /> : error ? <Message variant='danger' /> : (
                     <Form onSubmit={submitHandler}>
