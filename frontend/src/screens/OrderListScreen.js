@@ -55,11 +55,16 @@ const OrderListScreen = () => {
                                     <td>{order._id}</td>
                                     <td>{order.user && order.user.name}</td>
                                     <td>{order.totalPrice}</td>
-                                    <td>{order.isPaid ? order.paidAt : (
+                                    <td>{order.isPaid ? order.paidAt.substring(0, 10) : (
                                         <i className='fas fa-times'></i>
                                     )}</td>
                                     <td>{order.isDelivered ?
-                                        (<i className='fas fa-check' style={{ color: 'green' }}></i>) :
+                                        (
+                                            <span>
+                                                {order.deliveredAt.substring(0, 10)} <i className='fas fa-check' style={{ color: 'green' }}></i>
+                                            </span>
+
+                                        ) :
                                         (<i className='fas fa-times' style={{ color: 'red' }}></i>)}</td>
 
                                     <td>
