@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
+import Meta from '../components/Meta'
 import Products from '../components/Products'
 import { listProducts } from '../actions/productActions'
 import Loader from '../components/Loader'
@@ -29,7 +30,8 @@ const HomeScreen = () => {
 
     return (
         <>
-            {!keyword && <ProductCarousel />}
+            <Meta title='Welcome to ECART | Home' />
+            {!keyword ? <ProductCarousel /> : <Link to='/' className='btn btn-light'>Go Back</Link>}
             <h1>Latest Products</h1>
             {loading ? (<Loader />) :
                 error ? (<Message variant='danger'>{error}</Message>) :
