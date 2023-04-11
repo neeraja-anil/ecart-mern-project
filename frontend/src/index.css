@@ -2,6 +2,11 @@ main {
     min-height: 80vh;
 }
 
+h1 {
+    margin-top: 1rem;
+    padding: 1rem 0;
+}
+
 h4 {
     padding: 1rem 0;
 }
@@ -43,4 +48,72 @@ a {
 .checkout-status div.active {
     border-bottom: 0.1rem #0f0e0e solid;
     color: #0f0e0e;
+}
+
+/* carousel */
+
+.carousel-item {
+    background: linear-gradient(to right, #bbd2c5, #536976, #292e49);
+}
+
+
+/* .carousel-item-next,
+.carousel-item-prev,
+.carousel-item-active {
+    display: flex;
+} */
+
+.carousel-caption {
+    position: absolute;
+    top: 30px;
+    left: 40%;
+}
+
+.carousel-caption h2 {
+    color: #fff;
+}
+
+.carousel-caption p {
+    color: #a2b9bc;
+}
+
+
+.carousel img {
+    height: 300px;
+    padding: 30px;
+    margin: 40px;
+    border-radius: 50px;
+}
+
+.carousel a {
+    margin: 0 auto;
+}
+
+.fade-in-image {
+    animation-duration: 3s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+        margin-left: 50%;
+    }
+
+    to {
+        margin-left: 40px;
+    }
+}
+
+.fade-in-h2 {
+    animation: fadeInAnimation ease 3s;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
