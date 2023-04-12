@@ -27,6 +27,9 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <SearchBox />
             <Nav className="ms-auto">
+              <LinkContainer to={'/wishlist'}>
+                <Nav.Link ><i className="fas fa-heart" style={{ color: 'gray' }}></i></Nav.Link>
+              </LinkContainer>
               <LinkContainer to={'/cart'}>
                 <Nav.Link ><i className="fas fa-shopping-cart"></i>Cart</Nav.Link>
               </LinkContainer>

@@ -117,3 +117,11 @@ a {
         opacity: 1;
     }
 }
+
+.fa-heart {
+    padding: 20px 25px;
+}
+
+.fas.fa-heart {
+    color: #e6005c;
+}

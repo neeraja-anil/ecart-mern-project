@@ -42,6 +42,10 @@ const ProductScreen = () => {
     navigate(`/cart/${id}?qty=${qty}`)
   }
 
+  const addToWishlistHandler = () => {
+    navigate(`/wishlist/${id}`)
+  }
+
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(createProductReview(id, { rating, comment }))
@@ -120,7 +124,10 @@ const ProductScreen = () => {
                     )
                     }
                     <ListGroup.Item>
-                      <Button onClick={addToCartHandler} className='btn-block w-100' type='button' disabled={product.countInStock === 0}>ADD TO CART</Button>
+                      <Row>
+                        <Col md={3}><i className='far fa-heart' onClick={addToWishlistHandler}></i></Col>
+                        <Col><Button onClick={addToCartHandler} className='btn-block w-100' type='button' disabled={product.countInStock === 0}>ADD TO CART</Button></Col>
+                      </Row>
                     </ListGroup.Item>
                   </ListGroup>
                 </Col>
