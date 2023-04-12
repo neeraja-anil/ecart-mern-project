@@ -28,7 +28,7 @@ const Header = () => {
             <SearchBox />
             <Nav className="ms-auto">
               <LinkContainer to={'/wishlist'}>
-                <Nav.Link ><i className="fas fa-heart" style={{ color: 'gray' }}></i></Nav.Link>
+                <Nav.Link ><i className="fas fa-heart-circle-check p-0" ></i></Nav.Link>
               </LinkContainer>
               <LinkContainer to={'/cart'}>
                 <Nav.Link ><i className="fas fa-shopping-cart"></i>Cart</Nav.Link>

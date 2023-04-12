@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Row, Col, Image, ListGroup } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -9,17 +9,12 @@ import Message from '../components/Message'
 const WishlistScreen = () => {
 
     const { id } = useParams();
-    const navigate = useNavigate()
-    const { search } = useLocation();
-
     const productId = id
-    const qty = search ? Number(new URLSearchParams(search).get('qty')) : 1
-    console.log(qty);
+
 
     const dispatch = useDispatch()
     const wishlist = useSelector(state => state.wishlist)
     const { wishlistItems } = wishlist
-    console.log(wishlistItems);
 
     useEffect(() => {
         if (productId) {

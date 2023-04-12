@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -10,7 +10,9 @@ const Products = ({ product }) => {
 
     const wishlist = useSelector(state => state.wishlist)
     const { wishlistItems } = wishlist
-    console.log(wishlistItems[0])
+    const existItem = wishlistItems.find(wishlistItem => wishlistItem.product === product._id)
+    console.log(existItem && existItem.product)
+
 
     const [toggleHeart, setToggleHeart] = useState(false);
     const dispatch = useDispatch()
@@ -23,6 +25,7 @@ const Products = ({ product }) => {
             dispatch(removeFromWishlist(product._id))
         }
     }
+
 
 
     return (
@@ -43,7 +46,8 @@ const Products = ({ product }) => {
                 </Card.Text>
                 <Row>
                     <Col><Card.Text as='h4'>${product.price}</Card.Text></Col>
-                    <Col><i className={toggleHeart ? 'fas fa-heart' : 'far fa-heart'} onClick={heartChangeHandler}></i></Col>
+
+                    <Col>{existItem && existItem.product ? <i className='fas fa-heart' onClick={heartChangeHandler}></i> : <i className={!toggleHeart ? 'far fa-heart' : 'fas fa-heart'} onClick={heartChangeHandler}></i>}</Col>
                 </Row>
 
 

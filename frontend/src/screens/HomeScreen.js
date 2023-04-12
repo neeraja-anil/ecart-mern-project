@@ -17,8 +17,6 @@ const HomeScreen = () => {
 
     const { keyword, pageNumber } = useParams()
 
-    console.log(keyword)
-
     const dispatch = useDispatch()
     const productList = useSelector(state => state.productList)
     const { loading, error, products, page, pages } = productList

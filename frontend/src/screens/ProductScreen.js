@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Meta from '../components/Meta'
 import Rating from '../components/Rating'
 import { listProductsDetails, createProductReview } from '../actions/productActions'
+import { addToWishlist, removeFromWishlist } from '../actions/wishlistActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -15,6 +16,8 @@ const ProductScreen = () => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
+
+  const [toggleHeart, setToggleHeart] = useState(false);
 
   const navigate = useNavigate()
   const { id } = useParams();
@@ -27,6 +30,12 @@ const ProductScreen = () => {
 
   const productReviewCreate = useSelector(state => state.productReviewCreate)
   const { error: errorProductReview, success: successProductReview } = productReviewCreate
+
+  const wishlist = useSelector(state => state.wishlist)
+  const { wishlistItems } = wishlist
+  const existItem = wishlistItems.find(wishlistItem => wishlistItem.product === product._id)
+  console.log(existItem && existItem.product)
+
 
   useEffect(() => {
     if (successProductReview) {
@@ -42,8 +51,13 @@ const ProductScreen = () => {
     navigate(`/cart/${id}?qty=${qty}`)
   }
 
-  const addToWishlistHandler = () => {
-    navigate(`/wishlist/${id}`)
+  const heartChangeHandler = () => {
+    setToggleHeart(!toggleHeart)
+    if (!toggleHeart) {
+      dispatch(addToWishlist(product._id))
+    } else {
+      dispatch(removeFromWishlist(product._id))
+    }
   }
 
   const submitHandler = (e) => {
@@ -125,7 +139,7 @@ const ProductScreen = () => {
                     }
                     <ListGroup.Item>
                       <Row>
-                        <Col md={3}><i className='far fa-heart' onClick={addToWishlistHandler}></i></Col>
+                        <Col md={3}>{existItem && existItem.product ? <i className='fas fa-heart' onClick={heartChangeHandler}></i> : <i className={!toggleHeart ? 'far fa-heart' : 'fas fa-heart'} onClick={heartChangeHandler}></i>}</Col>
                         <Col><Button onClick={addToCartHandler} className='btn-block w-100' type='button' disabled={product.countInStock === 0}>ADD TO CART</Button></Col>
                       </Row>
                     </ListGroup.Item>
