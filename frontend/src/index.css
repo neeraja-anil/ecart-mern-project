@@ -126,3 +126,13 @@ a {
 .fas.fa-heart {
     color: #e6005c;
 }
+
+.custom-btn {
+    border-color: #18201d;
+    color: #18201d;
+}
+
+.custom-btn:hover {
+    background-color: #18201d;
+    color: white;
+}

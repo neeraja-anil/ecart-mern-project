@@ -21,6 +21,8 @@ const Products = ({ product }) => {
         setToggleHeart(!toggleHeart)
         if (!toggleHeart) {
             dispatch(addToWishlist(product._id))
+        } else if (existItem && existItem.product === product._id) {
+            dispatch(removeFromWishlist(product._id))
         } else {
             dispatch(removeFromWishlist(product._id))
         }
