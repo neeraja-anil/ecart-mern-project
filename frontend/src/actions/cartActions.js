@@ -1,6 +1,12 @@
 import axios from 'axios'
 import {
     CART_ADD_ITEM,
+    CART_CREATE_ITEM_FAIL,
+    CART_CREATE_ITEM_REQUEST,
+    CART_CREATE_ITEM_SUCCESS,
+    CART_DETAILS_FAIL,
+    CART_DETAILS_REQUEST,
+    CART_DETAILS_SUCCESS,
     CART_REMOVE_ITEM,
     CART_SAVE_PAYMENT_METHOD,
     CART_SAVE_SHIPPING_ADDRESS
@@ -23,6 +29,62 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
     })
 
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+export const createCart = (cart) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: CART_CREATE_ITEM_REQUEST })
+
+        const { userLogin: { userInfo } } = getState()
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        }
+
+
+        const { data } = await axios.post(`/api/cart/`, cart, config)
+
+        dispatch({
+            type: CART_CREATE_ITEM_SUCCESS,
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: CART_CREATE_ITEM_FAIL,
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+        })
+    }
+
+
+}
+
+export const getCartDetails = () => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: CART_DETAILS_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        }
+
+        const { data } = await axios.get(`/api/cart`, config)
+
+        dispatch({
+            type: CART_DETAILS_SUCCESS,
+            payload: data,
+        })
+    } catch (error) {
+        dispatch({
+            type: CART_DETAILS_FAIL,
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+        })
+    }
 }
 
 export const removeItem = (id) => (dispatch, getState) => {

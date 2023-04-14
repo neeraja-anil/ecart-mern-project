@@ -3,10 +3,10 @@ import { Link, useNavigate, useParams, useLocation } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Button, Form, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { addToCart, removeItem } from '../actions/cartActions'
+import { addToCart, removeItem, createCart, getCartDetails } from '../actions/cartActions'
 import Message from '../components/Message'
 
-const CartScreen = ({ location }) => {
+const CartScreen = () => {
 
     const { id } = useParams();
     const navigate = useNavigate()
@@ -21,11 +21,17 @@ const CartScreen = ({ location }) => {
     const { cartItems } = cart
     console.log(cartItems);
 
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
+
     useEffect(() => {
-        if (productId) {
-            dispatch(addToCart(productId, qty))
+        if (userInfo) {
+            dispatch(createCart({
+                cartItems: cart.cartItems,
+            }))
         }
-    }, [dispatch, productId, qty])
+
+    }, [dispatch, cart.cartItems, userInfo])
 
     const removeFromCartHandler = (id) => {
         dispatch(removeItem(id))

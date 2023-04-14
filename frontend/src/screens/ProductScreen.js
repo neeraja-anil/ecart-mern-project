@@ -10,6 +10,7 @@ import { addToWishlist, removeFromWishlist } from '../actions/wishlistActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import { addToCart, createCart } from '../actions/cartActions'
 
 const ProductScreen = () => {
 
@@ -27,6 +28,9 @@ const ProductScreen = () => {
 
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
+
+  const cart = useSelector(state => state.cart)
+  const { cartItems } = cart
 
   const productReviewCreate = useSelector(state => state.productReviewCreate)
   const { error: errorProductReview, success: successProductReview } = productReviewCreate
@@ -48,6 +52,7 @@ const ProductScreen = () => {
   }, [dispatch, id, successProductReview])
 
   const addToCartHandler = () => {
+    dispatch(addToCart(id, qty))
     navigate(`/cart/${id}?qty=${qty}`)
   }
 
