@@ -9,6 +9,7 @@ import productRoutes from './routes/productRoutes.js'
 import UserRoutes from './routes/userRoutes.js'
 import OrderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import cartRoutes from './routes/cartRoutes.js'
 
 dotenv.config()
 connectDB()
@@ -29,6 +30,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/users', UserRoutes)
 app.use('/api/orders', OrderRoutes)
 app.use('/api/upload', uploadRoutes)
+app.use('/api/cart', cartRoutes)
 
 app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_ID))
 
