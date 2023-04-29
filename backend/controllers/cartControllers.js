@@ -10,19 +10,28 @@ const addCartItems = asyncHandler(async (req, res) => {
 
     const cart = await Cart.findOne({ user: req.user._id })
     if (cart) {
-        const item = cart.cartItems.find(x => x.product.equals(cartItems.product))
+        //const item = cart.cartItems.find(x => x.product.equals(cartItems.product))
+        const item = cart.cartItems.find(o1 => cartItems.some(o2 => o1.product.equals(o2.product)))
+        console.log('item', item.qty)
         let condition, update
 
         if (item) {
-            condition = { user: req.user._id, "cartItems.product": cartItems.product }
+            console.log('here')
+            const product = cartItems.find(x => item.product.equals(x.product))
+            console.log('cart ', req.body.cartItems)
+            condition = { user: req.user._id, "cartItems.product": product.product }
             update = {
                 "$set": {
                     "cartItems.$": {
-                        ...req.body.cartItems,
-                        qty: item.qty + req.body.cartItems.qty
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        product: product.product,
+                        qty: product.qty
                     }
                 }
             }
+
         } else {
             //res.status(200).json({ message: cartItems })
             condition = { user: req.user._id }
