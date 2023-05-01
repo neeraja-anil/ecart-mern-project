@@ -10,12 +10,13 @@ const addCartItems = asyncHandler(async (req, res) => {
 
     const cart = await Cart.findOne({ user: req.user._id })
     if (cart) {
-        //const item = cart.cartItems.find(x => x.product.equals(cartItems.product))
         const item = cart.cartItems.find(o1 => cartItems.some(o2 => o1.product.equals(o2.product)))
+        const itemExists = cartItems.every(cartItem => cart.cartItems.some(c => c.product.equals(cartItem.product)));
+        console.log(itemExists)
         console.log('item', item.qty)
         let condition, update
 
-        if (item) {
+        if (itemExists) {
             console.log('here')
             const product = cartItems.find(x => item.product.equals(x.product))
             console.log('cart ', req.body.cartItems)
@@ -34,12 +35,16 @@ const addCartItems = asyncHandler(async (req, res) => {
 
         } else {
             //res.status(200).json({ message: cartItems })
-            condition = { user: req.user._id }
-            update = {
-                "$push": {
-                    "cartItems": req.body.cartItems
+            const newItems = cartItems.filter(cartItem => !cart.cartItems.some(c => c.product.equals(cartItem.product)))
+            if (newItems.length > 0) {
+                condition = { user: req.user._id }
+                update = {
+                    "$addToSet": {
+                        "cartItems": { "$each": newItems }
+                    }
                 }
             }
+
         }
         const ifCart = await Cart.findOneAndUpdate(condition, update)
         if (ifCart) {
