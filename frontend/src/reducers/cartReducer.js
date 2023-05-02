@@ -9,6 +9,7 @@ import {
     CART_DETAILS_REQUEST,
     CART_DETAILS_SUCCESS,
     CART_DETAILS_FAIL,
+    CART_REMOVE_ITEM_SUCCESS,
 } from '../constants/cartConstants'
 
 export const cartReducer = (state = { cartItems: [], shippingAddress: {}, paymentMethod: null }, action) => {
@@ -28,7 +29,7 @@ export const cartReducer = (state = { cartItems: [], shippingAddress: {}, paymen
                     cartItems: [...state.cartItems, item]
                 }
             }
-        case CART_REMOVE_ITEM:
+        case CART_REMOVE_ITEM_SUCCESS:
             return {
                 ...state,
                 cartItems: state.cartItems.filter(cartItem => cartItem.product !== action.payload)

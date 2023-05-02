@@ -7,7 +7,9 @@ import {
     CART_DETAILS_FAIL,
     CART_DETAILS_REQUEST,
     CART_DETAILS_SUCCESS,
-    CART_REMOVE_ITEM,
+    CART_REMOVE_ITEM_FAIL,
+    CART_REMOVE_ITEM_REQUEST,
+    CART_REMOVE_ITEM_SUCCESS,
     CART_SAVE_PAYMENT_METHOD,
     CART_SAVE_SHIPPING_ADDRESS
 } from '../constants/cartConstants'
@@ -87,11 +89,32 @@ export const getCartDetails = () => async (dispatch, getState) => {
     }
 }
 
-export const removeItem = (id) => (dispatch, getState) => {
-    dispatch({
-        type: CART_REMOVE_ITEM,
-        payload: id
-    })
+export const removeItem = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: CART_REMOVE_ITEM_REQUEST,
+        })
+
+        const { userLogin: { userInfo } } = getState()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        }
+
+        await axios.delete(`/api/cart/${id}`, config)
+
+        dispatch({
+            type: CART_REMOVE_ITEM_SUCCESS,
+            payload: id
+        })
+    } catch (error) {
+        dispatch({
+            type: CART_REMOVE_ITEM_FAIL,
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
+        })
+    }
+
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
 

@@ -10,31 +10,29 @@ const addCartItems = asyncHandler(async (req, res) => {
 
     const cart = await Cart.findOne({ user: req.user._id })
     if (cart) {
-        const item = cart.cartItems.find(o1 => cartItems.some(o2 => o1.product.equals(o2.product)))
+        const item = cart.cartItems.filter(o1 => cartItems.some(o2 => o1.product.equals(o2.product)))
         const itemExists = cartItems.every(cartItem => cart.cartItems.some(c => c.product.equals(cartItem.product)));
-        console.log(itemExists)
-        console.log('item', item.qty)
         let condition, update
 
         if (itemExists) {
-            console.log('here')
-            const product = cartItems.find(x => item.product.equals(x.product))
-            console.log('cart ', req.body.cartItems)
-            condition = { user: req.user._id, "cartItems.product": product.product }
-            update = {
-                "$set": {
-                    "cartItems.$": {
-                        name: product.name,
-                        price: product.price,
-                        image: product.image,
-                        product: product.product,
-                        qty: product.qty
+            const product = cartItems.filter(x1 => item.some(x2 => x2.product.equals(x1.product)))
+            product.forEach(pro => {
+                condition = { user: req.user._id, "cartItems.product": pro.product }
+                update = {
+                    "$set": {
+                        "cartItems.$": {
+                            name: pro.name,
+                            price: pro.price,
+                            image: pro.image,
+                            product: pro.product,
+                            qty: pro.qty
+                        }
                     }
                 }
-            }
+            })
+
 
         } else {
-            //res.status(200).json({ message: cartItems })
             const newItems = cartItems.filter(cartItem => !cart.cartItems.some(c => c.product.equals(cartItem.product)))
             if (newItems.length > 0) {
                 condition = { user: req.user._id }
@@ -46,7 +44,7 @@ const addCartItems = asyncHandler(async (req, res) => {
             }
 
         }
-        const ifCart = await Cart.findOneAndUpdate(condition, update)
+        const ifCart = await Cart.findOneAndUpdate(condition, update, { new: true })
         if (ifCart) {
             return res.status(201).json({ cart: cart })
         }
@@ -68,6 +66,27 @@ const addCartItems = asyncHandler(async (req, res) => {
 
 })
 
+//@desc DELETE cart items from db
+//@route DELETE /api/cart
+//@access private 
+
+const removeCartItems = asyncHandler(async (req, res) => {
+    const cart = await Cart.findOne({ user: req.user._id })
+
+    if (cart) {
+        Cart.updateOne(
+            { user: req.user._id },
+            { $pull: { cartItems: { product: req.params.id } } }
+        ).then(() => res.json({ message: 'Product removed' }))
+
+
+    } else {
+        res.status(404)
+        throw new Error('Item Not Found')
+    }
+})
+
+
 //@desc GET cart items from db
 //@route GET /api/cart
 //@access private 
@@ -83,4 +102,4 @@ const getCartItems = asyncHandler(async (req, res) => {
     }
 })
 
-export { addCartItems, getCartItems }
+export { addCartItems, getCartItems, removeCartItems }
