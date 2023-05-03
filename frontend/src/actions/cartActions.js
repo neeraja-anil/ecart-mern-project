@@ -96,13 +96,17 @@ export const removeItem = (id) => async (dispatch, getState) => {
         })
 
         const { userLogin: { userInfo } } = getState()
-        const config = {
-            headers: {
-                Authorization: `Bearer ${userInfo.token}`,
-            },
+
+
+        if (userInfo) {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${userInfo.token}`,
+                },
+            }
+            await axios.delete(`/api/cart/${id}`, config)
         }
 
-        await axios.delete(`/api/cart/${id}`, config)
 
         dispatch({
             type: CART_REMOVE_ITEM_SUCCESS,
